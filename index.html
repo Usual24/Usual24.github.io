@@ -1,11 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>나만의 블로그</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        .content {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .post {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .post-title {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        .post-date {
+            color: gray;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .post-content {
+            font-size: 1.2em;
+        }
+        .new-post {
+            margin-top: 20px;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello!!</h1>
+    <header>
+        <h1>나만의 블로그</h1>
+    </header>
+    <div class="content">
+        <div id="posts">
+            <!-- 여기에 게시글들이 추가될 거야 -->
+        </div>
+
+        <div class="new-post" onclick="createNewPost()">새 글 작성하기</div>
+    </div>
+
+    <div id="newPostForm" style="display: none;">
+        <div class="content">
+            <h2>새 글 작성</h2>
+            <form id="postForm">
+                <input type="text" id="postTitle" placeholder="글 제목" required><br><br>
+                <textarea id="postContent" rows="4" placeholder="글 내용" required></textarea><br><br>
+                <button type="submit">글 저장</button>
+                <button type="button" onclick="cancelPost()">취소</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let posts = [];  // 블로그 글들을 저장할 배열
+
+        function displayPosts() {
+            const postContainer = document.getElementById("posts");
+            postContainer.innerHTML = '';
+
+            posts.forEach(post => {
+                const postElement = document.createElement("div");
+                postElement.classList.add("post");
+
+                postElement.innerHTML = `
+                    <h2 class="post-title">${post.title}</h2>
+                    <p class="post-date">${post.date}</p>
+                    <p class="post-content">${post.content}</p>
+                `;
+                postContainer.appendChild(postElement);
+            });
+        }
+
+        function createNewPost() {
+            document.getElementById('newPostForm').style.display = 'block';
+        }
+
+        function cancelPost() {
+            document.getElementById('newPostForm').style.display = 'none';
+        }
+
+        document.getElementById("postForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById("postTitle").value;
+            const content = document.getElementById("postContent").value;
+            const date = new Date().toLocaleString();
+
+            const newPost = {
+                title: title,
+                content: content,
+                date: date
+            };
+
+            posts.push(newPost);
+            displayPosts();
+
+            document.getElementById("postTitle").value = '';
+            document.getElementById("postContent").value = '';
+            cancelPost();
+        });
+
+        // 처음에 게시글을 보여주는 함수 호출
+        displayPosts();
+    </script>
 </body>
 </html>
