@@ -27,6 +27,7 @@
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         .post-title {
             font-size: 1.8em;
@@ -54,6 +55,20 @@
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .delete-btn:hover {
+            background-color: darkred;
         }
     </style>
 </head>
@@ -98,7 +113,7 @@
             const postContainer = document.getElementById("posts");
             postContainer.innerHTML = '';
 
-            posts.forEach(post => {
+            posts.forEach((post, index) => {
                 const postElement = document.createElement("div");
                 postElement.classList.add("post");
 
@@ -106,6 +121,7 @@
                     <h2 class="post-title">${post.title}</h2>
                     <p class="post-date">${post.date}</p>
                     <p class="post-content">${post.content}</p>
+                    <button class="delete-btn" onclick="deletePost(${index})">삭제</button>
                 `;
                 postContainer.appendChild(postElement);
             });
@@ -144,6 +160,14 @@
             document.getElementById("postContent").value = '';
             cancelPost();
         });
+
+        // 글 삭제 처리
+        function deletePost(index) {
+            const posts = getPosts();
+            posts.splice(index, 1);  // 선택한 글을 배열에서 제거
+            savePosts(posts);  // 변경된 배열을 로컬 저장소에 저장
+            displayPosts();  // 화면 갱신
+        }
 
         // 페이지 로드 시 기존 게시글들 표시
         displayPosts();
