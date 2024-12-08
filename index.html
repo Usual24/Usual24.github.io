@@ -42,12 +42,18 @@
             font-size: 1.2em;
         }
         .new-post {
-            margin-top: 20px;
+            position: fixed;  /* 화면에 고정 */
+            top: 20px;        /* 상단에서 20px 떨어짐 */
+            right: 20px;      /* 오른쪽에서 20px 떨어짐 */
             background-color: #333;
             color: white;
-            padding: 10px;
-            text-align: center;
+            padding: 10px 20px;
             cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .new-post:hover {
+            background-color: #555;
         }
         input, textarea {
             width: 100%;
@@ -102,9 +108,9 @@
         <div id="posts">
             <!-- 여기에 게시글들이 추가될 거야 -->
         </div>
-
-        <div class="new-post" onclick="createNewPost()">새 글 작성하기</div>
     </div>
+
+    <div class="new-post" onclick="createNewPost()">새 글 작성하기</div>
 
     <div id="newPostForm" style="display: none;">
         <div class="content">
@@ -129,7 +135,7 @@
     </div>
 
     <script>
-        const ADMIN_PASSWORD = "Groot2460924";  // 관리자 비밀번호 설정
+        const ADMIN_PASSWORD = "admin123";  // 관리자 비밀번호 설정
 
         // 로컬 스토리지에서 글을 불러오고 새 글을 저장하는 함수
         function getPosts() {
