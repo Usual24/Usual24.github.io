@@ -48,6 +48,13 @@
             text-align: center;
             cursor: pointer;
         }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -75,9 +82,19 @@
     </div>
 
     <script>
-        let posts = [];  // 블로그 글들을 저장할 배열
+        // 로컬 스토리지에서 글을 불러오고 새 글을 저장하는 함수
+        function getPosts() {
+            const posts = JSON.parse(localStorage.getItem("posts"));
+            return posts ? posts : [];
+        }
 
+        function savePosts(posts) {
+            localStorage.setItem("posts", JSON.stringify(posts));
+        }
+
+        // 블로그 글을 화면에 표시
         function displayPosts() {
+            const posts = getPosts();
             const postContainer = document.getElementById("posts");
             postContainer.innerHTML = '';
 
@@ -94,14 +111,17 @@
             });
         }
 
+        // 새 글 작성 폼 표시
         function createNewPost() {
             document.getElementById('newPostForm').style.display = 'block';
         }
 
+        // 새 글 작성 취소
         function cancelPost() {
             document.getElementById('newPostForm').style.display = 'none';
         }
 
+        // 글 저장 처리
         document.getElementById("postForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
@@ -115,15 +135,17 @@
                 date: date
             };
 
+            const posts = getPosts();
             posts.push(newPost);
-            displayPosts();
+            savePosts(posts);
 
+            displayPosts();
             document.getElementById("postTitle").value = '';
             document.getElementById("postContent").value = '';
             cancelPost();
         });
 
-        // 처음에 게시글을 보여주는 함수 호출
+        // 페이지 로드 시 기존 게시글들 표시
         displayPosts();
     </script>
 </body>
