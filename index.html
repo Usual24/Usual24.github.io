@@ -70,6 +70,28 @@
         .delete-btn:hover {
             background-color: darkred;
         }
+        .delete-dialog {
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+        .delete-dialog-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .delete-dialog input {
+            width: 80%;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -90,13 +112,25 @@
             <form id="postForm">
                 <input type="text" id="postTitle" placeholder="글 제목" required><br><br>
                 <textarea id="postContent" rows="4" placeholder="글 내용" required></textarea><br><br>
+                <input type="password" id="deletePassword" placeholder="삭제 비밀번호 설정" required><br><br>
                 <button type="submit">글 저장</button>
                 <button type="button" onclick="cancelPost()">취소</button>
             </form>
         </div>
     </div>
 
+    <div class="delete-dialog" id="deleteDialog">
+        <div class="delete-dialog-content">
+            <h3>삭제 비밀번호 입력</h3>
+            <input type="password" id="deletePasswordInput" placeholder="삭제 비밀번호" required><br>
+            <button onclick="confirmDelete()">삭제</button>
+            <button onclick="cancelDelete()">취소</button>
+        </div>
+    </div>
+
     <script>
+        const ADMIN_PASSWORD = "Groot2460924";  // 관리자 비밀번호 설정
+
         // 로컬 스토리지에서 글을 불러오고 새 글을 저장하는 함수
         function getPosts() {
             const posts = JSON.parse(localStorage.getItem("posts"));
@@ -121,7 +155,7 @@
                     <h2 class="post-title">${post.title}</h2>
                     <p class="post-date">${post.date}</p>
                     <p class="post-content">${post.content}</p>
-                    <button class="delete-btn" onclick="deletePost(${index})">삭제</button>
+                    <button class="delete-btn" onclick="openDeleteDialog(${index})">삭제</button>
                 `;
                 postContainer.appendChild(postElement);
             });
@@ -144,11 +178,13 @@
             const title = document.getElementById("postTitle").value;
             const content = document.getElementById("postContent").value;
             const date = new Date().toLocaleString();
+            const deletePassword = document.getElementById("deletePassword").value;
 
             const newPost = {
                 title: title,
                 content: content,
-                date: date
+                date: date,
+                deletePassword: deletePassword // 삭제 비밀번호 저장
             };
 
             const posts = getPosts();
@@ -158,15 +194,45 @@
             displayPosts();
             document.getElementById("postTitle").value = '';
             document.getElementById("postContent").value = '';
+            document.getElementById("deletePassword").value = '';
             cancelPost();
         });
 
         // 글 삭제 처리
-        function deletePost(index) {
+        function openDeleteDialog(index) {
+            const deleteDialog = document.getElementById("deleteDialog");
+            deleteDialog.style.display = 'flex';
+            window.deleteIndex = index;  // 삭제할 글의 인덱스를 저장
+        }
+
+        function confirmDelete() {
+            const deletePasswordInput = document.getElementById("deletePasswordInput").value;
             const posts = getPosts();
-            posts.splice(index, 1);  // 선택한 글을 배열에서 제거
-            savePosts(posts);  // 변경된 배열을 로컬 저장소에 저장
-            displayPosts();  // 화면 갱신
+            const post = posts[window.deleteIndex];
+
+            // 관리자가 입력한 경우
+            if (deletePasswordInput === ADMIN_PASSWORD) {
+                posts.splice(window.deleteIndex, 1);
+                savePosts(posts);
+                displayPosts();
+                cancelDelete();
+                return;
+            }
+
+            // 사용자가 입력한 비밀번호가 해당 글의 비밀번호와 일치하는 경우
+            if (deletePasswordInput === post.deletePassword) {
+                posts.splice(window.deleteIndex, 1);
+                savePosts(posts);
+                displayPosts();
+                cancelDelete();
+            } else {
+                alert("비밀번호가 일치하지 않습니다.");
+            }
+        }
+
+        function cancelDelete() {
+            document.getElementById("deleteDialog").style.display = 'none';
+            document.getElementById("deletePasswordInput").value = ''; // 비밀번호 입력 필드 초기화
         }
 
         // 페이지 로드 시 기존 게시글들 표시
