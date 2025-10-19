@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usual-Blog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body {
+      background-color: #1a202c;
+      color: #e2e8f0;
+    }
+    a {
+      color: #60a5fa;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: #93c5fd;
+    }
+    .prose {
+      color: #e2e8f0;
+    }
+    .prose h1, .prose h2, .prose h3 {
+      color: #60a5fa;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="bg-gray-900 p-4 shadow">
+    <nav class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-400">Usual-Blog</h1>
+      <a href="/" class="text-blue-400 hover:text-blue-300">Home</a>
+    </nav>
+  </header>
+
+  <main class="container mx-auto p-4 flex-grow">
+    <section id="post-list" class="space-y-4">
+      <h2 class="text-xl font-semibold text-blue-400">Posts</h2>
+      <ul id="posts" class="space-y-2"></ul>
+    </section>
+
+    <section id="post-content" class="hidden prose max-w-none">
+      <h2 id="post-title" class="text-2xl font-bold"></h2>
+      <div id="post-body"></div>
+    </section>
+  </main>
+
+  <footer class="bg-gray-900 p-4 text-center text-gray-400">
+    <p>&copy; 2025 Usual-Blog. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Function to load and display the post list
+    async function loadPosts() {
+      try {
+        // Fetch the list of .md files from the /data folder
+        const response = await fetch('/data/');
+        const text = await response.text();
+        const parser = new DOMParser();
+        const html = parser.parseFromString(text, 'text/html');
+        const links = Array.from(html.querySelectorAll('a'))
+          .filter(a => a.href.endsWith('.md'))
+          .map(a => ({
+            name: decodeURIComponent(a.href.split('/').pop().replace('.md', '')),
+            url: a.href
+          }));
+
+        const postList = document.getElementById('posts');
+        postList.innerHTML = '';
+        links.forEach(post => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = `#${encodeURIComponent(post.name)}`;
+          a.textContent = post.name;
+          a.className = 'text-blue-400 hover:text-blue-300';
+          a.onclick = () => loadPost(post.url, post.name);
+          li.appendChild(a);
+          postList.appendChild(li);
+        });
+
+        // Load a specific post if the URL has a hash
+        const hash = window.location.hash.slice(1);
+        if (hash) {
+          const post = links.find(p => encodeURIComponent(p.name) === hash);
+          if (post) loadPost(post.url, post.name);
+        }
+      } catch (error) {
+        console.error('Error loading posts:', error);
+        document.getElementById('posts').innerHTML = '<li>Error loading posts.</li>';
+      }
+    }
+
+    // Function to load and display a single post
+    async function loadPost(url, title) {
+      try {
+        const response = await fetch(url);
+        const markdown = await response.text();
+        const html = marked.parse(markdown);
+        document.getElementById('post-list').classList.add('hidden');
+        document.getElementById('post-content').classList.remove('hidden');
+        document.getElementById('post-title').textContent = title;
+        document.getElementById('post-body').innerHTML = html;
+        window.scrollTo(0, 0);
+      } catch (error) {
+        console.error('Error loading post:', error);
+        document.getElementById('post-content').innerHTML = '<p>Error loading post.</p>';
+      }
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPosts();
+      // Handle back/forward navigation
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.slice(1);
+        if (!hash) {
+          document.getElementById('post-list').classList.remove('hidden');
+          document.getElementById('post-content').classList.add('hidden');
+        } else {
+          const post = document.querySelector(`a[href="#${hash}"]`);
+          if (post) {
+            const title = decodeURIComponent(hash);
+            const url = `/data/${title}.md`;
+            loadPost(url, title);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
