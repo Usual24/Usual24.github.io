@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Usual24 | Developer</title>
+<title>Usual24 | Developer & Moderator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -39,7 +39,6 @@
     overflow-x: hidden;
   }
 
-  /* ── NOISE OVERLAY ── */
   body::before {
     content: '';
     position: fixed;
@@ -49,7 +48,6 @@
     z-index: 0;
   }
 
-  /* ── SCROLL PROGRESS ── */
   #progress {
     position: fixed;
     top: 0; left: 0;
@@ -60,7 +58,6 @@
     transition: width 0.1s;
   }
 
-  /* ── NAV ── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -85,9 +82,7 @@
     text-decoration: none;
   }
 
-  .nav-logo span {
-    color: var(--accent2);
-  }
+  .nav-logo span { color: var(--accent2); }
 
   .nav-links {
     display: flex;
@@ -156,7 +151,6 @@
 
   .mobile-menu a:hover { color: var(--accent2); }
 
-  /* ── SECTIONS ── */
   section {
     position: relative;
     z-index: 1;
@@ -187,7 +181,7 @@
     margin-bottom: 1rem;
   }
 
-  /* ── HERO ── */
+  /* HERO */
   #hero {
     min-height: 100svh;
     display: flex;
@@ -234,10 +228,7 @@
     to { transform: translate(40px, 30px); }
   }
 
-  .hero-content {
-    position: relative;
-    z-index: 2;
-  }
+  .hero-content { position: relative; z-index: 2; }
 
   .hero-eyebrow {
     font-family: var(--mono);
@@ -277,7 +268,7 @@
     font-size: clamp(1rem, 2.5vw, 1.3rem);
     color: var(--text2);
     font-weight: 300;
-    max-width: 540px;
+    max-width: 580px;
     margin-bottom: 0.8rem;
     opacity: 0;
     animation: fade-up 0.8s 0.5s forwards;
@@ -293,10 +284,7 @@
     animation: fade-up 0.8s 0.65s forwards;
   }
 
-  .hero-motto em {
-    color: var(--accent2);
-    font-style: normal;
-  }
+  .hero-motto em { color: var(--accent2); font-style: normal; }
 
   .hero-ctas {
     display: flex;
@@ -320,29 +308,10 @@
     gap: 0.5rem;
   }
 
-  .btn-primary {
-    background: var(--accent);
-    color: #fff;
-    border: 1px solid var(--accent);
-  }
-
-  .btn-primary:hover {
-    background: var(--accent2);
-    border-color: var(--accent2);
-    transform: translateY(-2px);
-  }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border2);
-  }
-
-  .btn-outline:hover {
-    border-color: var(--accent2);
-    color: var(--accent2);
-    transform: translateY(-2px);
-  }
+  .btn-primary { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
+  .btn-primary:hover { background: var(--accent2); border-color: var(--accent2); transform: translateY(-2px); }
+  .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border2); }
+  .btn-outline:hover { border-color: var(--accent2); color: var(--accent2); transform: translateY(-2px); }
 
   .hero-scroll {
     position: absolute;
@@ -382,7 +351,6 @@
     to { opacity: 1; }
   }
 
-  /* ── STATUS BADGE ── */
   .status-badge {
     display: inline-flex;
     align-items: center;
@@ -411,7 +379,7 @@
     50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(74,222,128,0); }
   }
 
-  /* ── ABOUT ── */
+  /* ABOUT */
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -420,21 +388,11 @@
     align-items: start;
   }
 
-  .about-text {
-    font-size: 1rem;
-    color: var(--text2);
-    line-height: 1.9;
-  }
-
+  .about-text { font-size: 1rem; color: var(--text2); line-height: 1.9; }
   .about-text p + p { margin-top: 1rem; }
-
   .about-text strong { color: var(--text); font-weight: 500; }
 
-  .about-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+  .about-cards { display: flex; flex-direction: column; gap: 1rem; }
 
   .info-card {
     background: var(--surface);
@@ -447,33 +405,52 @@
     transition: border-color 0.2s, transform 0.2s;
   }
 
-  .info-card:hover {
-    border-color: var(--border2);
+  .info-card:hover { border-color: var(--border2); transform: translateX(4px); }
+
+  /* 서버 운영 경력 강조 카드 */
+  .info-card.highlight {
+    border-color: rgba(91,106,245,0.3);
+    background: rgba(91,106,245,0.06);
+  }
+
+  .info-card.highlight:hover {
+    border-color: rgba(91,106,245,0.55);
     transform: translateX(4px);
   }
 
-  .info-card-icon {
-    font-size: 1.3rem;
-    flex-shrink: 0;
-    margin-top: 2px;
+  .info-card-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+  .info-card-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; color: var(--accent2); text-transform: uppercase; margin-bottom: 0.2rem; }
+  .info-card-value { font-size: 0.92rem; color: var(--text); font-weight: 400; }
+  .info-card-sub { font-size: 0.8rem; color: var(--text3); margin-top: 0.25rem; line-height: 1.5; }
+
+  /* 운영 경력 인라인 배지 */
+  .op-stat-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
   }
 
-  .info-card-label {
+  .op-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .op-stat-val {
     font-family: var(--mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
+    font-size: 1rem;
+    font-weight: 700;
     color: var(--accent2);
-    text-transform: uppercase;
-    margin-bottom: 0.2rem;
   }
 
-  .info-card-value {
-    font-size: 0.92rem;
-    color: var(--text);
-    font-weight: 400;
+  .op-stat-label {
+    font-size: 0.68rem;
+    color: var(--text3);
+    letter-spacing: 0.05em;
   }
 
-  /* ── SKILLS ── */
+  /* SKILLS */
   .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -486,7 +463,6 @@
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.4rem;
-    transition: border-color 0.2s;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s, transform 0.5s, border-color 0.2s;
@@ -506,11 +482,7 @@
     border-bottom: 1px solid var(--border);
   }
 
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
   .skill-tag {
     font-family: var(--mono);
@@ -523,11 +495,7 @@
     transition: all 0.2s;
   }
 
-  .skill-tag:hover {
-    border-color: var(--accent);
-    color: var(--accent2);
-    background: var(--accent-glow);
-  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent2); background: var(--accent-glow); }
 
   .skill-tag.hot {
     border-color: rgba(91,106,245,0.3);
@@ -535,13 +503,8 @@
     background: rgba(91,106,245,0.07);
   }
 
-  /* ── PROJECTS ── */
-  .projects-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
+  /* PROJECTS */
+  .projects-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2.5rem; }
 
   .project-card {
     background: var(--surface);
@@ -554,14 +517,17 @@
     transform: translateY(24px);
   }
 
-  .project-card.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .project-card.visible { opacity: 1; transform: translateY(0); }
+  .project-card:hover { border-color: rgba(91,106,245,0.4); transform: translateY(-4px); }
+
+  /* 서버 운영 카드 특별 스타일 */
+  .project-card.ops-card {
+    border-color: rgba(91,106,245,0.2);
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(91,106,245,0.05) 100%);
   }
 
-  .project-card:hover {
-    border-color: rgba(91,106,245,0.4);
-    transform: translateY(-4px);
+  .project-card.ops-card:hover {
+    border-color: rgba(91,106,245,0.5);
   }
 
   .project-header {
@@ -573,13 +539,7 @@
     flex-wrap: wrap;
   }
 
-  .project-name {
-    font-family: var(--mono);
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.02em;
-  }
+  .project-name { font-family: var(--mono); font-size: 1.2rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
 
   .project-badge {
     font-family: var(--mono);
@@ -591,45 +551,16 @@
     white-space: nowrap;
   }
 
-  .badge-live {
-    background: rgba(74,222,128,0.1);
-    color: #4ade80;
-    border: 1px solid rgba(74,222,128,0.25);
-  }
+  .badge-live { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.25); }
+  .badge-private { background: rgba(255,170,0,0.1); color: #faaa00; border: 1px solid rgba(255,170,0,0.25); }
+  .badge-portfolio { background: rgba(91,106,245,0.1); color: var(--accent2); border: 1px solid rgba(91,106,245,0.25); }
+  .badge-flagship { background: rgba(255,100,120,0.1); color: #ff8090; border: 1px solid rgba(255,100,120,0.25); }
+  .badge-ops { background: rgba(56,182,255,0.1); color: #38b6ff; border: 1px solid rgba(56,182,255,0.25); }
 
-  .badge-private {
-    background: rgba(255,170,0,0.1);
-    color: #faaa00;
-    border: 1px solid rgba(255,170,0,0.25);
-  }
-
-  .badge-portfolio {
-    background: rgba(91,106,245,0.1);
-    color: var(--accent2);
-    border: 1px solid rgba(91,106,245,0.25);
-  }
-
-  .badge-flagship {
-    background: rgba(255,100,120,0.1);
-    color: #ff8090;
-    border: 1px solid rgba(255,100,120,0.25);
-  }
-
-  .project-desc {
-    color: var(--text2);
-    font-size: 0.95rem;
-    line-height: 1.8;
-    margin-bottom: 1.2rem;
-  }
-
+  .project-desc { color: var(--text2); font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.2rem; }
   .project-desc strong { color: var(--text); font-weight: 500; }
 
-  .project-features {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.3rem;
-  }
+  .project-features { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.3rem; }
 
   .feature-tag {
     font-size: 0.75rem;
@@ -642,9 +573,7 @@
     transition: color 0.2s;
   }
 
-  .project-card:hover .feature-tag {
-    color: var(--text2);
-  }
+  .project-card:hover .feature-tag { color: var(--text2); }
 
   .project-stats {
     display: flex;
@@ -654,105 +583,51 @@
     flex-wrap: wrap;
   }
 
-  .project-stat {
+  .project-stat { display: flex; flex-direction: column; gap: 0.15rem; }
+  .project-stat-val { font-family: var(--mono); font-size: 1.05rem; font-weight: 700; color: var(--text); }
+  .project-stat-label { font-size: 0.7rem; color: var(--text3); letter-spacing: 0.05em; }
+
+  /* 운영 경험 인사이트 박스 */
+  .ops-insight {
+    background: rgba(56,182,255,0.05);
+    border: 1px solid rgba(56,182,255,0.15);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    margin: 1rem 0 1.2rem;
+  }
+
+  .ops-insight-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: #38b6ff;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .ops-insight ul {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  .project-stat-val {
-    font-family: var(--mono);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .project-stat-label {
-    font-size: 0.7rem;
-    color: var(--text3);
-    letter-spacing: 0.05em;
-  }
-
-  .love-indicator {
-    display: inline-flex;
-    align-items: center;
     gap: 0.35rem;
-    font-size: 0.72rem;
-    color: #ff8090;
-    font-family: var(--mono);
-    margin-top: 0.6rem;
   }
 
-  .love-heart {
-    animation: heartbeat 1.4s ease-in-out infinite;
-  }
-
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    14% { transform: scale(1.25); }
-    28% { transform: scale(1); }
-    42% { transform: scale(1.2); }
-    56% { transform: scale(1); }
-  }
-
-  /* ── TIMELINE ── */
-  .timeline {
+  .ops-insight ul li {
+    font-size: 0.85rem;
+    color: var(--text2);
+    padding-left: 1rem;
     position: relative;
-    margin-top: 2.5rem;
-    padding-left: 2rem;
   }
 
-  .timeline::before {
-    content: '';
+  .ops-insight ul li::before {
+    content: '→';
     position: absolute;
     left: 0;
-    top: 0; bottom: 0;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--accent), transparent);
+    color: #38b6ff;
+    font-size: 0.75rem;
   }
 
-  .timeline-item {
-    position: relative;
-    padding-bottom: 2.5rem;
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: opacity 0.5s, transform 0.5s;
-  }
-
-  .timeline-item.visible { opacity: 1; transform: translateX(0); }
-
-  .timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -2rem;
-    top: 0.4rem;
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--accent2);
-    transform: translateX(-3px);
-  }
-
-  .timeline-year {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent2);
-    letter-spacing: 0.1em;
-    margin-bottom: 0.25rem;
-  }
-
-  .timeline-event {
-    font-size: 0.95rem;
-    color: var(--text);
-    font-weight: 400;
-    margin-bottom: 0.25rem;
-  }
-
-  .timeline-detail {
-    font-size: 0.85rem;
-    color: var(--text3);
-  }
-
-  /* ── PHILOSOPHY ── */
+  /* PHILOSOPHY */
   .philosophy-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -773,44 +648,24 @@
   .philosophy-card.visible { opacity: 1; transform: translateY(0); }
   .philosophy-card:hover { border-color: var(--border2); }
 
-  .philosophy-num {
-    font-family: var(--mono);
-    font-size: 2rem;
-    font-weight: 700;
-    color: rgba(91,106,245,0.2);
-    line-height: 1;
-    margin-bottom: 0.6rem;
+  .philosophy-card.ops-philosophy {
+    border-color: rgba(56,182,255,0.2);
+    background: rgba(56,182,255,0.04);
   }
 
-  .philosophy-title {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 0.5rem;
+  .philosophy-card.ops-philosophy:hover {
+    border-color: rgba(56,182,255,0.4);
   }
 
-  .philosophy-desc {
-    font-size: 0.85rem;
-    color: var(--text3);
-    line-height: 1.7;
-  }
+  .philosophy-num { font-family: var(--mono); font-size: 2rem; font-weight: 700; color: rgba(91,106,245,0.2); line-height: 1; margin-bottom: 0.6rem; }
+  .philosophy-card.ops-philosophy .philosophy-num { color: rgba(56,182,255,0.25); }
+  .philosophy-title { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
+  .philosophy-desc { font-size: 0.85rem; color: var(--text3); line-height: 1.7; }
 
-  /* ── CONTACT ── */
-  #contact {
-    text-align: center;
-  }
-
-  .contact-inner {
-    max-width: 560px;
-    margin: 0 auto;
-  }
-
-  .contact-desc {
-    color: var(--text2);
-    font-size: 1rem;
-    margin: 1.5rem 0 2.5rem;
-    line-height: 1.8;
-  }
+  /* CONTACT */
+  #contact { text-align: center; }
+  .contact-inner { max-width: 560px; margin: 0 auto; }
+  .contact-desc { color: var(--text2); font-size: 1rem; margin: 1.5rem 0 2.5rem; line-height: 1.8; }
 
   .contact-card {
     background: var(--surface);
@@ -824,33 +679,11 @@
     transition: border-color 0.3s;
   }
 
-  .contact-card:hover {
-    border-color: rgba(91,106,245,0.4);
-  }
+  .contact-card:hover { border-color: rgba(91,106,245,0.4); }
 
-  .contact-label {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    color: var(--text3);
-    text-transform: uppercase;
-  }
-
-  .contact-value {
-    font-family: var(--mono);
-    font-size: 1.1rem;
-    color: var(--text);
-    font-weight: 700;
-  }
-
-  .contact-note {
-    font-size: 0.8rem;
-    color: var(--text3);
-    max-width: 340px;
-    text-align: center;
-    line-height: 1.6;
-    margin-top: 0.5rem;
-  }
+  .contact-label { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; color: var(--text3); text-transform: uppercase; }
+  .contact-value { font-family: var(--mono); font-size: 1.1rem; color: var(--text); font-weight: 700; }
+  .contact-note { font-size: 0.8rem; color: var(--text3); max-width: 340px; text-align: center; line-height: 1.6; margin-top: 0.5rem; }
 
   .free-badge {
     display: inline-flex;
@@ -865,7 +698,6 @@
     color: #4ade80;
   }
 
-  /* ── FOOTER ── */
   footer {
     position: relative;
     z-index: 1;
@@ -880,7 +712,6 @@
 
   footer span { color: var(--text2); }
 
-  /* ── DIVIDER ── */
   .section-divider {
     max-width: 1100px;
     margin: 0 auto;
@@ -889,19 +720,14 @@
     background: var(--border);
   }
 
-  /* ── ANIMATIONS UTIL ── */
   .animate-on-scroll {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
 
-  .animate-on-scroll.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
 
-  /* ── CURSOR GLOW ── */
   .cursor-glow {
     position: fixed;
     width: 300px; height: 300px;
@@ -913,7 +739,17 @@
     transition: all 0.15s ease;
   }
 
-  /* ── RESPONSIVE ── */
+  @keyframes glitch {
+    0%, 90%, 100% { clip-path: none; transform: none; }
+    91% { clip-path: polygon(0 20%, 100% 20%, 100% 30%, 0 30%); transform: translateX(-4px); }
+    92% { clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%); transform: translateX(4px); }
+    93% { clip-path: none; transform: none; }
+  }
+
+  .hero-name:hover { animation: glitch 3s infinite; }
+
+  .section-num { font-family: var(--mono); font-size: 0.65rem; color: var(--text3); letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .nav-burger { display: flex; }
@@ -924,46 +760,6 @@
   @media (max-width: 480px) {
     .skills-grid { grid-template-columns: 1fr; }
     .philosophy-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ── GLITCH TEXT EFFECT ── */
-  @keyframes glitch {
-    0%, 90%, 100% { clip-path: none; transform: none; }
-    91% { clip-path: polygon(0 20%, 100% 20%, 100% 30%, 0 30%); transform: translateX(-4px); }
-    92% { clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%); transform: translateX(4px); }
-    93% { clip-path: none; transform: none; }
-  }
-
-  .hero-name:hover {
-    animation: glitch 3s infinite;
-  }
-
-  /* ── TYPEWRITER ── */
-  .typewriter {
-    overflow: hidden;
-    border-right: 2px solid var(--accent2);
-    white-space: nowrap;
-    animation: typing 2.5s steps(30, end) 1s both, blink-cursor 0.8s step-end 3.5s infinite;
-    display: inline-block;
-    max-width: fit-content;
-  }
-
-  @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-  }
-
-  @keyframes blink-cursor {
-    50% { border-color: transparent; }
-  }
-
-  /* ── SECTION NUMBER ── */
-  .section-num {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--text3);
-    letter-spacing: 0.1em;
-    margin-bottom: 0.3rem;
   }
 </style>
 </head>
@@ -1006,11 +802,12 @@
       <span class="status-dot"></span>
       Open To Work · 무상 협업 가능
     </div>
-    <div class="hero-eyebrow">Discord Bot & AI Developer</div>
+    <div class="hero-eyebrow">Discord Bot & AI Developer · Server Admin</div>
     <h1 class="hero-name">Usual<span class="accent">24</span></h1>
     <p class="hero-tagline">
       심심해서 시작해 6년이 된 개발자.<br>
-      Discord 봇 · AI 시스템 · 자동화 도구를 만듭니다.
+      Discord 봇 · AI 시스템 · 자동화 도구를 만들고,<br>
+      1,000명 규모 서버도 직접 운영해봤습니다.
     </p>
     <p class="hero-motto">
       "안되면 되게해라. 나는 안 평범한 개발자니까."
@@ -1033,7 +830,7 @@
 <section id="about">
   <div class="section-num">01 /</div>
   <p class="section-tag">About</p>
-  <h2 class="section-title animate-on-scroll">어쩌다 개발자</h2>
+  <h2 class="section-title animate-on-scroll">어쩌다 개발자, 그리고 운영자</h2>
 
   <div class="about-grid">
     <div class="about-text animate-on-scroll">
@@ -1046,8 +843,14 @@
         현재 스텔라이브 관련 디스코드 서버 여러 곳에 기술을 지원하고 있습니다.
       </p>
       <p>
-        항상 <strong>사용자 입장</strong>에서 먼저 생각합니다.<br>
-        기술을 모르는 서버 관리자도 쉽게 쓸 수 있어야 좋은 봇입니다.
+        개발자이기 이전에, <strong>직접 서버를 운영해본 관리자</strong>이기도 합니다.
+        약 1,000명 규모의 Discord 서버와 약 200명규모 디스코드 서버를 운영하며 관리자의 고충과 니즈를
+        실제로 경험했습니다. 규칙 설정부터 멤버 관리, 분쟁 조율, 이벤트 기획까지 —
+        <strong>운영자 입장을 몸으로 아는 개발자</strong>입니다.
+      </p>
+      <p>
+        그래서 만드는 봇이 다릅니다. 기술을 모르는 서버 관리자도 쉽게 쓸 수 있어야
+        좋은 봇이라는 걸, 코드로 배운 게 아니라 <strong>직접 관리자로 살아보며</strong> 배웠습니다.
       </p>
     </div>
 
@@ -1073,11 +876,36 @@
           <div class="info-card-value">Discord Bot · AI/LLM · 자동화</div>
         </div>
       </div>
+
+      <!-- 서버 운영 경력 강조 카드 -->
+      <div class="info-card highlight animate-on-scroll">
+        <div class="info-card-icon">🏛️</div>
+        <div>
+          <div class="info-card-label">서버 운영 경험</div>
+          <div class="info-card-value">대규모 서버 2개 직접 운영</div>
+          <div class="info-card-sub">관리자의 고충을 몸소 경험한 개발자</div>
+          <div class="op-stat-row">
+            <div class="op-stat">
+              <span class="op-stat-val">2</span>
+              <span class="op-stat-label">운영 서버</span>
+            </div>
+            <div class="op-stat">
+              <span class="op-stat-val">~2,000</span>
+              <span class="op-stat-label">운영 멤버 합산</span>
+            </div>
+            <div class="op-stat">
+              <span class="op-stat-val">실전 경험</span>
+              <span class="op-stat-label">관리자 시점 보유</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="info-card animate-on-scroll">
         <div class="info-card-icon">🎯</div>
         <div>
           <div class="info-card-label">목표</div>
-          <div class="info-card-value">AI 심화 학습 · 스텔라이브 생태계 확장</div>
+          <div class="info-card-value">AI 심화 학습 · 한국 디스코드 봇 생태계 확장</div>
         </div>
       </div>
       <div class="info-card animate-on-scroll">
@@ -1098,7 +926,7 @@
   <div class="section-num">02 /</div>
   <p class="section-tag">Skills</p>
   <h2 class="section-title animate-on-scroll">기술 스택</h2>
-  <p class="animate-on-scroll" style="color: var(--text2); margin-top: 0.5rem; font-size:0.95rem;">웬만하면 다 가능합니다. 필요하면 새로 배워서라도.</p>
+  <p class="animate-on-scroll" style="color: var(--text2); margin-top: 0.5rem; font-size:0.95rem;">웬만하면 다 가능합니다. 언제든지 준비되있습니다.</p>
 
   <div class="skills-grid">
     <div class="skill-category">
@@ -1152,6 +980,17 @@
       </div>
     </div>
     <div class="skill-category">
+      <div class="skill-cat-label">커뮤니티 운영</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">서버 설계</span>
+        <span class="skill-tag hot">멤버 관리</span>
+        <span class="skill-tag">규칙 정책 수립</span>
+        <span class="skill-tag">분쟁 조율</span>
+        <span class="skill-tag">이벤트 기획</span>
+        <span class="skill-tag">봇 운영</span>
+      </div>
+    </div>
+    <div class="skill-category">
       <div class="skill-cat-label">프론트엔드</div>
       <div class="skill-tags">
         <span class="skill-tag">React</span>
@@ -1178,9 +1017,61 @@
 <section id="projects">
   <div class="section-num">03 /</div>
   <p class="section-tag">Projects</p>
-  <h2 class="section-title animate-on-scroll">만든 것들</h2>
+  <h2 class="section-title animate-on-scroll">만든 것들, 운영한 것들</h2>
 
   <div class="projects-list">
+
+    <!-- 서버 운영 경력 카드 — 맨 위에 배치 -->
+    <div class="project-card ops-card">
+      <div class="project-header">
+        <div>
+          <div class="project-name">Discord 서버 운영 · 관리자 경력</div>
+        </div>
+        <span class="project-badge badge-ops">직접 운영</span>
+      </div>
+      <p class="project-desc">
+        개발자이기 이전에 <strong>직접 서버를 굴려본 관리자</strong>입니다.<br>
+        약 <strong>대규모 Discord 커뮤니티 서버 2곳</strong>을 운영하며,
+        채널 설계, 멤버 관리, 규칙 정책 수립, 분쟁 조율, 이벤트 기획까지
+        서버 관리자라면 겪는 모든 상황을 몸소 경험했습니다.<br>
+        "관리자 시점"을 몸으로 아는 만큼, 실제 운영 현장에서 필요한 기능과
+        그냥 있으면 좋은 기능을 <strong>정확하게 구분</strong>할 수 있습니다.
+      </p>
+
+      <div class="ops-insight">
+        <div class="ops-insight-label">운영하며 직접 깨달은 것들</div>
+        <ul>
+          <li>관리자가 가장 지치는 건 반복 작업 — 공지, 역할 부여, 규칙 안내 자동화가 핵심</li>
+          <li>멤버가 많아지면 수동 모더레이션은 현실적으로 불가능</li>
+          <li>봇이 "있는 기능"보다 "쓰기 쉬운 기능"이 훨씬 중요하다</li>
+          <li>서버 분위기를 망치는 건 대부분 자동화로 막을 수 있는 문제들</li>
+        </ul>
+      </div>
+
+      <div class="project-features">
+        <span class="feature-tag">서버 구조 설계</span>
+        <span class="feature-tag">채널 · 역할 체계</span>
+        <span class="feature-tag">멤버 관리</span>
+        <span class="feature-tag">정책 수립</span>
+        <span class="feature-tag">이벤트 기획</span>
+        <span class="feature-tag">분쟁 조율</span>
+        <span class="feature-tag">봇 직접 운용</span>
+      </div>
+      <div class="project-stats">
+        <div class="project-stat">
+          <span class="project-stat-val">2개</span>
+          <span class="project-stat-label">운영 서버 수</span>
+        </div>
+        <div class="project-stat">
+          <span class="project-stat-val">~1,000명</span>
+          <span class="project-stat-label">서버 당 규모</span>
+        </div>
+        <div class="project-stat">
+          <span class="project-stat-val">관리자 시점</span>
+          <span class="project-stat-label">차별점</span>
+        </div>
+      </div>
+    </div>
 
     <!-- Stel24 -->
     <div class="project-card">
@@ -1324,20 +1215,25 @@
     <div class="philosophy-card">
       <div class="philosophy-num">01</div>
       <div class="philosophy-title">사용자 먼저</div>
-      <div class="philosophy-desc">기술적으로 모르는 서버 관리자도 편하게 쓸 수 있어야 합니다. 코드보다 사용자 경험이 먼저.</div>
+      <div class="philosophy-desc">기술적으로 모르는 서버 관리자도 편하게 쓸 수 있어야 합니다. 코드보다 사용자 경험이 먼저입니다.</div>
     </div>
     <div class="philosophy-card">
       <div class="philosophy-num">02</div>
       <div class="philosophy-title">안되면 되게해라</div>
       <div class="philosophy-desc">불가능처럼 보여도 일단 시도합니다. 못 하겠으면 방법을 찾고, 방법이 없으면 만듭니다.</div>
     </div>
-    <div class="philosophy-card">
+    <div class="philosophy-card ops-philosophy">
       <div class="philosophy-num">03</div>
+      <div class="philosophy-title">운영자 시점으로 만든다</div>
+      <div class="philosophy-desc">직접 대규모 서버를 운영해봤습니다. 관리자가 실제로 겪는 고충을 아는 개발자가 만드는 봇은 다릅니다. 필요한 기능과 불필요한 기능을 직접 살아보며 배웠습니다.</div>
+    </div>
+    <div class="philosophy-card">
+      <div class="philosophy-num">04</div>
       <div class="philosophy-title">완성보다 완성도</div>
       <div class="philosophy-desc">대충 돌아가는 것보다, 제대로 돌아가는 것에 집착합니다.</div>
     </div>
     <div class="philosophy-card">
-      <div class="philosophy-num">04</div>
+      <div class="philosophy-num">05</div>
       <div class="philosophy-title">커뮤니티를 위해</div>
       <div class="philosophy-desc">돈이 목적이 아닙니다. 내가 만든 게 실제로 쓰이고, 사람들이 편해지는 것이 보람입니다.</div>
     </div>
@@ -1355,7 +1251,8 @@
     <p class="contact-desc">
       Discord 서버 관리자이신가요? 봇이 필요하거나,<br>
       자동화·AI 기능을 원하신다면 편하게 연락 주세요.<br>
-      <strong>기술적인 지식은 없어도 됩니다.</strong> 제가 다 처리할게요.
+      <strong>기술적인 지식은 없어도 됩니다.</strong> 제가 다 처리할게요.<br>
+      <span style="color: var(--text3); font-size: 0.9rem;">관리자 입장을 직접 경험한 개발자라 하고 싶으신게 뭔지 금방 압니다.</span>
     </p>
 
     <div class="free-badge" style="margin: 0 auto 1.5rem; width: fit-content;">
@@ -1381,21 +1278,18 @@
 </footer>
 
 <script>
-  // Scroll progress
   window.addEventListener('scroll', () => {
     const el = document.getElementById('progress');
     const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
     el.style.width = pct + '%';
   });
 
-  // Cursor glow
   const glow = document.getElementById('cursor-glow');
   window.addEventListener('mousemove', e => {
     glow.style.left = e.clientX + 'px';
     glow.style.top = e.clientY + 'px';
   });
 
-  // Burger menu
   const burger = document.getElementById('burger');
   const mobileMenu = document.getElementById('mobile-menu');
   burger.addEventListener('click', () => {
@@ -1409,12 +1303,10 @@
     });
   });
 
-  // Intersection observer
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        // staggered children
         const children = entry.target.querySelectorAll
           ? entry.target.querySelectorAll('.skill-category, .project-card, .timeline-item, .philosophy-card')
           : [];
@@ -1428,7 +1320,6 @@
   document.querySelectorAll('.animate-on-scroll, .section-tag').forEach(el => io.observe(el));
   document.querySelectorAll('#skills, #projects, #timeline, #philosophy').forEach(el => io.observe(el));
 
-  // Direct observe for cards
   const cardObs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('visible');
