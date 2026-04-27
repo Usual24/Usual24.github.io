@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usual24 | Developer & Moderator</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #0f0f18;
+    --bg3: #13131f;
+    --surface: #16161f;
+    --border: #1e1e2e;
+    --accent: #7c6aff;
+    --accent2: #4fffb0;
+    --accent3: #ff6a6a;
+    --text: #e8e8f0;
+    --text2: #8888aa;
+    --text3: #55556a;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Noto Sans KR', sans-serif;
+    --display: 'Syne', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,15,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent2); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(124,106,255,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(79,255,176,0.05) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent2);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent2);
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-name .highlight { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--text2);
+    max-width: 520px;
+    margin-bottom: 0.8rem;
+    font-weight: 300;
+  }
+
+  .hero-quote {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--text3);
+    margin-bottom: 3rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: #9381ff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(124,106,255,0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent2);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent2);
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 3.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-text {
+    font-size: 1rem;
+    color: var(--text2);
+    line-height: 1.9;
+  }
+
+  .about-text strong { color: var(--text); font-weight: 500; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .stat-item {
+    background: var(--surface);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .stat-value {
+    font-family: var(--display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text3);
+    letter-spacing: 0.05em;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .skill-group {
+    background: var(--surface);
+    padding: 1.75rem;
+  }
+
+  .skill-group-title {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent2);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    background: var(--bg3);
+    color: var(--text2);
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* PROJECTS */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .project-card {
+    background: var(--surface);
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .project-card:hover { background: var(--bg3); }
+
+  .project-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-name {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .project-status {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    letter-spacing: 0.1em;
+  }
+
+  .status-live {
+    background: rgba(79,255,176,0.1);
+    color: var(--accent2);
+    border: 1px solid rgba(79,255,176,0.2);
+  }
+
+  .status-private {
+    background: rgba(255,106,106,0.1);
+    color: var(--accent3);
+    border: 1px solid rgba(255,106,106,0.2);
+  }
+
+  .status-portfolio {
+    background: rgba(124,106,255,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(124,106,255,0.2);
+  }
+
+  .project-desc {
+    font-size: 0.9rem;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .project-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-features li {
+    font-size: 0.85rem;
+    color: var(--text2);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .project-features li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .stack-tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    background: rgba(124,106,255,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(124,106,255,0.2);
+  }
+
+  .project-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+    min-width: 120px;
+  }
+
+  .meta-stat {
+    text-align: right;
+  }
+
+  .meta-value {
+    font-family: var(--display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .meta-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text3);
+    letter-spacing: 0.05em;
+  }
+
+  /* PHILOSOPHY */
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .philosophy-item {
+    background: var(--surface);
+    padding: 2rem;
+  }
+
+  .philosophy-num {
+    font-family: var(--display);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .philosophy-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+
+  .philosophy-desc {
+    font-size: 0.82rem;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  /* CONTACT */
+  .contact-box {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3rem;
+    background: var(--surface);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .contact-title {
+    font-family: var(--display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  .contact-desc {
+    font-size: 0.9rem;
+    color: var(--text2);
+    line-height: 1.8;
+    max-width: 480px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+  }
+
+  .contact-discord {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .open-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent2);
+    letter-spacing: 0.1em;
+    background: rgba(79,255,176,0.1);
+    border: 1px solid rgba(79,255,176,0.2);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+  }
+
+  .open-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text3);
+  }
+
+  .footer-quote {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text3);
+    font-style: italic;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.6s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-name { animation: fadeIn 0.6s ease 0.1s forwards; opacity: 0; }
+  .hero-tag { animation: fadeIn 0.6s ease 0s forwards; opacity: 0; }
+  .hero-desc { animation: fadeIn 0.6s ease 0.2s forwards; opacity: 0; }
+  .hero-quote { animation: fadeIn 0.6s ease 0.3s forwards; opacity: 0; }
+  .hero-actions { animation: fadeIn 0.6s ease 0.4s forwards; opacity: 0; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .project-card { grid-template-columns: 1fr; }
+    .project-meta { align-items: flex-start; flex-direction: row; }
+    .contact-box { grid-template-columns: 1fr; }
+    .contact-info { align-items: flex-start; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Usual<span>24</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">소개</a></li>
+    <li><a href="#skills">기술</a></li>
+    <li><a href="#projects">프로젝트</a></li>
+    <li><a href="#contact">연락처</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Open To Work · 무상 협업 가능</div>
+    <h1 class="hero-name">Usual<span class="highlight">24</span></h1>
+    <p class="hero-desc">심심해서 시작해 6년이 된 개발자.<br>Discord 봇 · AI 시스템 · 자동화 도구를 만들고,<br>대규모 서버도 직접 운영해봤습니다.</p>
+    <p class="hero-quote">"안되면 되게해라. 나는 안 평범한 개발자니까."</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
+      <a href="#contact" class="btn btn-outline">협업 문의</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About</div>
+  <h2 class="section-title">어쩌다 개발자, 그리고 운영자</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>심심해서 시작한 코딩이 어느새 <strong>6년</strong>이 됐습니다.</p>
+      <br>
+      <p><strong>Discord 봇, AI 시스템, 자동화 도구</strong>를 전문으로 개발합니다. LLM · RAG 기반 서비스와 커뮤니티 관리 자동화에 강점이 있으며, 현재 스텔라이브 관련 디스코드 서버 여러 곳에 기술을 지원하고 있습니다.</p>
+      <br>
+      <p>개발자이기 이전에, <strong>직접 서버를 운영해본 관리자</strong>이기도 합니다. 약 1,000명 규모의 Discord 서버와 약 200명 규모 서버를 운영하며 관리자의 고충과 니즈를 실제로 경험했습니다.</p>
+      <br>
+      <p>그래서 만드는 봇이 다릅니다. 기술을 모르는 서버 관리자도 쉽게 쓸 수 있어야 좋은 봇이라는 걸, 코드로 배운 게 아니라 <strong>직접 관리자로 살아보며</strong> 배웠습니다.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-item">
+        <span class="stat-value">6</span>
+        <span class="stat-label">years of dev</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">2</span>
+        <span class="stat-label">운영 서버</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">1.2K</span>
+        <span class="stat-label">운영 멤버 합산</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">∞</span>
+        <span class="stat-label">무상 협업</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Skills</div>
+  <h2 class="section-title">기술 스택</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">언어</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">HTML/CSS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">AI / LLM</div>
+      <div class="skill-tags">
+        <span class="tag">LLM</span>
+        <span class="tag">RAG</span>
+        <span class="tag">Google GenAI</span>
+        <span class="tag">Groq</span>
+        <span class="tag">벡터 DB</span>
+        <span class="tag">임베딩</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Discord 개발</div>
+      <div class="skill-tags">
+        <span class="tag">discord.py</span>
+        <span class="tag">슬래시 커맨드</span>
+        <span class="tag">봇 아키텍처</span>
+        <span class="tag">퍼미션 관리</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">자동화</div>
+      <div class="skill-tags">
+        <span class="tag">Selenium</span>
+        <span class="tag">Playwright</span>
+        <span class="tag">RSS</span>
+        <span class="tag">API Automation</span>
+        <span class="tag">스케줄링</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">인프라 / DB</div>
+      <div class="skill-tags">
+        <span class="tag">Linux</span>
+        <span class="tag">Docker</span>
+        <span class="tag">SQLite</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">MongoDB</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">미디어 / 기타</div>
+      <div class="skill-tags">
+        <span class="tag">yt-dlp</span>
+        <span class="tag">FFmpeg</span>
+        <span class="tag">TTS</span>
+        <span class="tag">AI 이미지 분석</span>
+        <span class="tag">GitHub API</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <h2 class="section-title">만든 것들</h2>
+  <div class="projects-list">
+
+    <!-- Stel24 -->
+    <div class="project-card">
+      <div>
+        <div class="project-header">
+          <span class="project-name">Stel24</span>
+          <span class="project-status status-live">서비스 중</span>
+        </div>
+        <p class="project-desc">
+          스텔라이브 버튜버 커뮤니티 Discord 서버를 위한 통합 관리 봇입니다. 서버 운영에 필요한 거의 모든 걸 혼자 처리할 수 있도록 만들었습니다. 기능은 Cog 단위로 분리돼 있고, 설정은 서버마다 독립적으로 관리됩니다.
+        </p>
+        <ul class="project-features">
+          <li>채팅 기반 레벨링 · XP · 랭킹 · 출석 시스템</li>
+          <li>타임아웃 · 메시지 청소 · 추방 · 욕설 자동 필터</li>
+          <li>입퇴장 · 메시지 수정/삭제 · 역할 변경 등 서버 이벤트 전체 로깅</li>
+          <li>인증 · 역할 부여 · 티켓 · 투표 · 공지 · 캡챠 자동화</li>
+          <li>YouTube 자막 수집 → Gemini AI 요약 → Discord 자동 게시</li>
+          <li>음성 채널 음악 재생 + TTS 믹싱</li>
+        </ul>
+        <div class="project-stack">
+          <span class="stack-tag">discord.py</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">SQLite</span>
+          <span class="stack-tag">Google Gemini</span>
+          <span class="stack-tag">yt-dlp</span>
+          <span class="stack-tag">FFmpeg</span>
+          <span class="stack-tag">Cog 아키텍처</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="meta-stat">
+          <div class="meta-value">200+</div>
+          <div class="meta-label">사용자</div>
+        </div>
+        <div class="meta-stat">
+          <div class="meta-value">14+</div>
+          <div class="meta-label">기능 모듈</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 양배추봇 -->
+    <div class="project-card">
+      <div>
+        <div class="project-header">
+          <span class="project-name">양배추봇</span>
+          <span class="project-status status-live">서비스 중</span>
+        </div>
+        <p class="project-desc">
+          스텔라이브 버튜버 유즈하 리코의 팬 커뮤니티 서버를 위한 올인원 관리 봇입니다. Stel24 기반 위에 팬덤 특화 기능을 얹었습니다. 핵심은 AI 비전 기반 구독 인증 시스템으로, 팬이 YouTube 구독 화면을 스크린샷으로 제출하면 봇이 이미지를 분석해 구독 버튼 유무를 자동으로 확인하고 역할을 부여합니다.
+        </p>
+        <ul class="project-features">
+          <li>AI 이미지 분석으로 YouTube 구독 여부 자동 인증</li>
+          <li>방송 요약 자동 게시 (Stel24 파생)</li>
+          <li>음악 재생 · TTS · 채팅 랭킹 · 투표 · 모더레이션</li>
+          <li>서버별 독립 설정 (guild_config.json)</li>
+          <li>슬래시 커맨드 기반, 비개발자 관리자도 쉽게 사용 가능</li>
+        </ul>
+        <div class="project-stack">
+          <span class="stack-tag">discord.py</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">AI Vision</span>
+          <span class="stack-tag">SQLite</span>
+          <span class="stack-tag">Google Gemini</span>
+          <span class="stack-tag">yt-dlp</span>
+          <span class="stack-tag">FFmpeg</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="meta-stat">
+          <div class="meta-value">1K+</div>
+          <div class="meta-label">사용자</div>
+        </div>
+        <div class="meta-stat">
+          <div class="meta-value">7+</div>
+          <div class="meta-label">주요 기능</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nota Bot -->
+    <div class="project-card">
+      <div>
+        <div class="project-header">
+          <span class="project-name">Nota Bot</span>
+          <span class="project-status status-private">비공개</span>
+        </div>
+        <p class="project-desc">
+          NotebookLM 스타일의 Discord 봇입니다. 파일을 업로드하면 워크스페이스가 생성되고, 그 공간 안에서 AI에게 질문하거나 문서 내용을 탐색할 수 있습니다. GitHub API 연동으로 레포지토리 파일을 직접 불러와 분석하는 기능도 지원합니다.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">LLM</span>
+          <span class="stack-tag">RAG</span>
+          <span class="stack-tag">GitHub API</span>
+          <span class="stack-tag">discord.py</span>
+          <span class="stack-tag">벡터 DB</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="meta-stat">
+          <div class="meta-value">실험작</div>
+          <div class="meta-label">성격</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MusBot -->
+    <div class="project-card">
+      <div>
+        <div class="project-header">
+          <span class="project-name">MusBot</span>
+          <span class="project-status status-portfolio">포트폴리오</span>
+        </div>
+        <p class="project-desc">
+          YouTube 음악을 Discord에서 재생하는 음악 봇입니다. yt-dlp + FFmpeg 조합으로 안정적인 스트리밍을 구현했습니다. 이후 양배추봇의 음악 재생 기능으로 계승됐습니다.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">yt-dlp</span>
+          <span class="stack-tag">FFmpeg</span>
+          <span class="stack-tag">discord.py</span>
+          <span class="stack-tag">오디오 스트리밍</span>
+        </div>
+      </div>
+      <div class="project-meta">
+        <div class="meta-stat">
+          <div class="meta-value">기반</div>
+          <div class="meta-label">후속작의</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="section-label">Philosophy</div>
+  <h2 class="section-title">개발 철학</h2>
+  <div class="philosophy-grid">
+    <div class="philosophy-item">
+      <div class="philosophy-num">01</div>
+      <div class="philosophy-title">사용자 먼저</div>
+      <div class="philosophy-desc">기술적으로 모르는 서버 관리자도 편하게 쓸 수 있어야 합니다. 코드보다 사용자 경험이 먼저입니다.</div>
+    </div>
+    <div class="philosophy-item">
+      <div class="philosophy-num">02</div>
+      <div class="philosophy-title">안되면 되게해라</div>
+      <div class="philosophy-desc">불가능처럼 보여도 일단 시도합니다. 못 하겠으면 방법을 찾고, 방법이 없으면 만듭니다.</div>
+    </div>
+    <div class="philosophy-item">
+      <div class="philosophy-num">03</div>
+      <div class="philosophy-title">운영자 시점으로 만든다</div>
+      <div class="philosophy-desc">직접 대규모 서버를 운영해봤습니다. 필요한 기능과 불필요한 기능을 직접 살아보며 배웠습니다.</div>
+    </div>
+    <div class="philosophy-item">
+      <div class="philosophy-num">04</div>
+      <div class="philosophy-title">완성보다 완성도</div>
+      <div class="philosophy-desc">대충 돌아가는 것보다, 제대로 돌아가는 것에 집착합니다.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">같이 만들어봐요</h2>
+  <div class="contact-box">
+    <div>
+      <p class="contact-desc">Discord 서버 관리자이신가요? 봇이 필요하거나 자동화 · AI 기능을 원하신다면 편하게 연락 주세요. 기술적인 지식은 없어도 됩니다. 하고 싶으신 게 뭔지만 말씀해 주시면 방법은 제가 찾겠습니다.</p>
+    </div>
+    <div class="contact-info">
+      <span class="open-badge">무상 협업 모집 중</span>
+      <span class="contact-discord">usual24_</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2026 Usual24</span>
+  <span class="footer-quote">"안되면 되게해라. 나는 안 평범한 개발자니까."</span>
+</footer>
+
+</body>
+</html>
